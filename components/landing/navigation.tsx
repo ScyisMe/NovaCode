@@ -48,7 +48,7 @@ export function Navigation() {
       <nav 
         className={`mx-auto transition-all duration-500 ${
           isScrolled || isMobileMenuOpen
-            ? "bg-background/70 backdrop-blur-2xl border border-primary/10 rounded-2xl shadow-[0_8px_32px_rgba(99,102,241,0.08)] max-w-[1200px]"
+            ? "bg-background/70 backdrop-blur-2xl border border-primary/10 rounded-2xl shadow-[0_8px_32px_rgba(59,82,187,0.06)] max-w-[1200px]"
             : "bg-transparent max-w-[1400px]"
         }`}
       >

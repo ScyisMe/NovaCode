@@ -9,21 +9,21 @@ const features = [
     title: "Веб та мобільна розробка",
     description: "Створюємо сучасні веб-додатки, SPA, PWA та нативні мобільні застосунки на React, Next.js, Flutter та Swift.",
     icon: Smartphone,
-    color: "from-blue-500 to-cyan-400",
+    color: "from-indigo-500 to-blue-400",
   },
   {
     number: "02",
     title: "Хмарна інфраструктура",
     description: "Проєктуємо та впроваджуємо хмарні рішення на AWS, GCP та Azure. DevOps, CI/CD, Kubernetes та мікросервісна архітектура.",
     icon: Cloud,
-    color: "from-cyan-400 to-teal-400",
+    color: "from-teal-500 to-cyan-400",
   },
   {
     number: "03",
     title: "AI та машинне навчання",
     description: "Інтеграція штучного інтелекту у ваші бізнес-процеси. NLP, комп'ютерний зір, рекомендаційні системи та чат-боти.",
     icon: Brain,
-    color: "from-violet-500 to-purple-400",
+    color: "from-violet-500 to-indigo-400",
   },
   {
     number: "04",
@@ -37,14 +37,14 @@ const features = [
     title: "Enterprise-рішення",
     description: "Розробка корпоративних систем: ERP, CRM, автоматизація процесів, інтеграція legacy-систем.",
     icon: Code,
-    color: "from-orange-500 to-amber-400",
+    color: "from-amber-500 to-orange-400",
   },
   {
     number: "06",
     title: "Аналітика та BI",
     description: "Побудова дата-платформ, дашбордів реального часу, ETL-процесів та предиктивної аналітики.",
     icon: BarChart3,
-    color: "from-pink-500 to-rose-400",
+    color: "from-rose-500 to-pink-400",
   },
 ];
 

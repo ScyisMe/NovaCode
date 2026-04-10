@@ -8,25 +8,25 @@ const securityFeatures = [
     icon: Shield,
     title: "Захист даних",
     description: "Впроваджуємо AES-256 шифрування, TLS 1.3 та захист від DDoS-атак на всіх рівнях.",
-    color: "from-blue-500 to-indigo-500",
+    color: "from-indigo-500 to-blue-400",
   },
   {
     icon: Lock,
     title: "Безпечна розробка",
     description: "OWASP Top 10 аудит, статичний аналіз коду, автоматичне сканування вразливостей.",
-    color: "from-cyan-500 to-teal-500",
+    color: "from-teal-500 to-cyan-400",
   },
   {
     icon: Eye,
     title: "Моніторинг 24/7",
     description: "Проактивний моніторинг, алерти в реальному часі, автоматичне масштабування та відновлення.",
-    color: "from-violet-500 to-purple-500",
+    color: "from-violet-500 to-indigo-400",
   },
   {
     icon: FileCheck,
     title: "Відповідність стандартам",
     description: "Допомагаємо з GDPR, PCI DSS, ISO 27001 та SOC 2 сертифікацією для вашого бізнесу.",
-    color: "from-emerald-500 to-green-500",
+    color: "from-emerald-500 to-teal-400",
   },
 ];
 

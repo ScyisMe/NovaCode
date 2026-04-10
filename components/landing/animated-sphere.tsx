@@ -94,7 +94,7 @@ export function AnimatedSphere() {
       for (let i = 0; i < points.length; i++) {
         const point = points[i];
         const alpha = 0.15 + (point.z + 1) * 0.35;
-        ctx.fillStyle = `rgba(0, 0, 0, ${alpha})`;
+        ctx.fillStyle = `rgba(40, 55, 100, ${alpha})`;
         ctx.fillText(point.char, point.x, point.y);
       }
 

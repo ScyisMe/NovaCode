@@ -43,7 +43,7 @@ export function CtaSection() {
           <div 
             className="absolute inset-0 opacity-20 pointer-events-none transition-opacity duration-300"
             style={{
-              background: `radial-gradient(600px circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(99,102,241,0.15), transparent 40%)`
+              background: `radial-gradient(600px circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(59,82,187,0.12), transparent 40%)`
             }}
           />
 

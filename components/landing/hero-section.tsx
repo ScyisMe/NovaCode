@@ -31,7 +31,7 @@ export function HeroSection() {
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-1/4 -right-1/4 w-[800px] h-[800px] rounded-full bg-primary/5 blur-[80px] animate-float" />
         <div className="absolute -bottom-1/4 -left-1/4 w-[600px] h-[600px] rounded-full bg-accent/5 blur-[80px] animate-float" style={{ animationDelay: '3s' }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-[var(--nova-purple)]/5 blur-[80px] animate-pulse-glow" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-[var(--nova-indigo)]/5 blur-[80px] animate-pulse-glow" />
       </div>
 
       {/* Animated sphere background */}
