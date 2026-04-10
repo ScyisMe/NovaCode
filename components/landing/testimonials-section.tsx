@@ -37,12 +37,33 @@ const companies = ["FinTech Solutions", "EduPlatform", "LogisTech", "RetailPro",
 
 export function TestimonialsSection() {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [animKey, setAnimKey] = useState(0);
+  const [displayIndex, setDisplayIndex] = useState(0);
+  const [phase, setPhase] = useState<"visible" | "fading-out" | "fading-in">("visible");
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const transitionRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const changeSlide = (idx: number) => {
+  const FADE_DURATION = 250; // ms for fade-out and fade-in
+  const SLIDE_INTERVAL = 7000;
+
+  const transitionTo = (idx: number) => {
+    if (idx === activeIndex || phase !== "visible") return;
+
+    // Clear any pending transitions
+    if (transitionRef.current) clearTimeout(transitionRef.current);
+
     setActiveIndex(idx);
-    setAnimKey((k) => k + 1);
+    setPhase("fading-out");
+
+    // After fade-out completes, swap content and fade in
+    transitionRef.current = setTimeout(() => {
+      setDisplayIndex(idx);
+      setPhase("fading-in");
+
+      // After fade-in completes, mark as visible
+      transitionRef.current = setTimeout(() => {
+        setPhase("visible");
+      }, FADE_DURATION);
+    }, FADE_DURATION);
   };
 
   const startTimer = () => {
@@ -50,38 +71,55 @@ export function TestimonialsSection() {
     timerRef.current = setInterval(() => {
       setActiveIndex((prev) => {
         const next = (prev + 1) % testimonials.length;
+
+        setPhase("fading-out");
+
+        if (transitionRef.current) clearTimeout(transitionRef.current);
+        transitionRef.current = setTimeout(() => {
+          setDisplayIndex(next);
+          setPhase("fading-in");
+
+          transitionRef.current = setTimeout(() => {
+            setPhase("visible");
+          }, FADE_DURATION);
+        }, FADE_DURATION);
+
         return next;
       });
-      setAnimKey((k) => k + 1);
-    }, 7000);
+    }, SLIDE_INTERVAL);
   };
 
   useEffect(() => {
     startTimer();
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
+      if (transitionRef.current) clearTimeout(transitionRef.current);
     };
   }, []);
 
   const goTo = (idx: number) => {
-    if (idx === activeIndex) return;
-    changeSlide(idx);
+    transitionTo(idx);
     startTimer();
   };
 
-  const activeTestimonial = testimonials[activeIndex];
+  const displayedTestimonial = testimonials[displayIndex];
+
+  // CSS transition styles based on phase
+  const contentStyle: React.CSSProperties = {
+    transition: `opacity ${FADE_DURATION}ms cubic-bezier(0.4, 0, 0.2, 1), transform ${FADE_DURATION}ms cubic-bezier(0.4, 0, 0.2, 1), filter ${FADE_DURATION}ms cubic-bezier(0.4, 0, 0.2, 1)`,
+    opacity: phase === "fading-out" ? 0 : 1,
+    transform: phase === "fading-out" ? "translateY(-12px)" : phase === "fading-in" ? "translateY(0)" : "translateY(0)",
+    filter: phase === "fading-out" ? "blur(4px)" : "blur(0)",
+  };
+
+  const metricStyle: React.CSSProperties = {
+    transition: `opacity ${FADE_DURATION}ms cubic-bezier(0.4, 0, 0.2, 1) 60ms, transform ${FADE_DURATION}ms cubic-bezier(0.4, 0, 0.2, 1) 60ms`,
+    opacity: phase === "fading-out" ? 0 : 1,
+    transform: phase === "fading-out" ? "translateY(-8px) scale(0.98)" : "translateY(0) scale(1)",
+  };
 
   return (
     <section className="relative py-32 lg:py-40 lg:pb-14 overflow-hidden">
-      <style dangerouslySetInnerHTML={{ __html: `
-        @keyframes testimonialFadeIn {
-          0% { opacity: 0; transform: translateY(20px); filter: blur(4px); }
-          100% { opacity: 1; transform: translateY(0); filter: blur(0); }
-        }
-        .testimonial-animate {
-          animation: testimonialFadeIn 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
-        }
-      `}} />
       <div className="absolute inset-0 bg-gradient-to-b from-primary/[0.02] to-transparent pointer-events-none" />
       
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
@@ -98,35 +136,38 @@ export function TestimonialsSection() {
 
         {/* Main Quote */}
         <div className="grid lg:grid-cols-12 gap-12 lg:gap-20 min-h-[300px]">
-          <div className="lg:col-span-8" key={`content-${animKey}`}>
-            <blockquote className="testimonial-animate">
+          <div className="lg:col-span-8">
+            <blockquote style={contentStyle}>
               <p className="font-display font-bold text-3xl md:text-4xl lg:text-5xl leading-[1.15] tracking-tight text-foreground">
-                &ldquo;{activeTestimonial.quote}&rdquo;
+                &ldquo;{displayedTestimonial.quote}&rdquo;
               </p>
             </blockquote>
 
-            <div className="mt-12 flex items-center gap-6 testimonial-animate" style={{ animationDelay: '80ms' }}>
+            <div className="mt-12 flex items-center gap-6" style={{
+              ...contentStyle,
+              transitionDelay: phase === "fading-out" ? "0ms" : "80ms",
+            }}>
               <div className="w-14 h-14 rounded-full bg-gradient-to-br from-primary/20 to-accent/20 border border-primary/10 flex items-center justify-center">
                 <span className="font-display text-xl font-bold text-gradient">
-                  {activeTestimonial.author.charAt(0)}
+                  {displayedTestimonial.author.charAt(0)}
                 </span>
               </div>
               <div>
-                <p className="text-lg font-display font-bold text-foreground">{activeTestimonial.author}</p>
+                <p className="text-lg font-display font-bold text-foreground">{displayedTestimonial.author}</p>
                 <p className="text-muted-foreground">
-                  {activeTestimonial.role}, {activeTestimonial.company}
+                  {displayedTestimonial.role}, {displayedTestimonial.company}
                 </p>
               </div>
             </div>
           </div>
 
           <div className="lg:col-span-4 flex flex-col justify-center">
-            <div key={`metric-${animKey}`} className="glass-card rounded-2xl p-8 testimonial-animate" style={{ animationDelay: '150ms' }}>
+            <div className="glass-card rounded-2xl p-8" style={metricStyle}>
               <span className="font-mono text-xs tracking-widest text-primary/60 uppercase block mb-4">
                 Результат
               </span>
               <p className="font-display font-bold text-3xl md:text-4xl text-gradient">
-                {activeTestimonial.metric}
+                {displayedTestimonial.metric}
               </p>
             </div>
 
